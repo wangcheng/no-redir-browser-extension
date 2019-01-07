@@ -1,0 +1,11 @@
+{
+  "name": "No Redirect",
+  "version": "1.0",
+  "description": "No Redirect",
+  "background": {
+    "persistent": false,
+    "scripts": ["assets/background.js"]
+  },
+  "permissions": ["tabs", "webNavigation"],
+  "manifest_version": 2
+}
