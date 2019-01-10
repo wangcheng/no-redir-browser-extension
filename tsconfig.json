@@ -5,6 +5,7 @@
     "module": "es2015",
     "target": "es2015",
     "jsx": "react",
+    "jsxFactory": "Snabbdom.createElement",
     "sourceMap": true,
     "moduleResolution": "node",
     "noUnusedLocals": true,
@@ -12,5 +13,5 @@
     "noImplicitAny": true,
     "strictNullChecks": true
   },
-  "include": ["src/background", "src/types.d.ts"]
+  "include": ["src"]
 }

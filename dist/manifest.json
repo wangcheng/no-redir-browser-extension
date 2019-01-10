@@ -6,6 +6,7 @@
     "persistent": false,
     "scripts": ["assets/background.js"]
   },
-  "permissions": ["tabs", "webNavigation"],
+  "options_page": "assets/options.html",
+  "permissions": ["tabs", "webNavigation", "storage"],
   "manifest_version": 2
 }

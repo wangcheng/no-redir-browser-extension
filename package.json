@@ -4,12 +4,15 @@
   "description": "A Browser Extenstion",
   "scripts": {
     "start": "webpack --watch",
+    "dev": "webpack-dev-server",
     "build": "webpack --env production",
+    "clean": "rm -r ./dist/assets",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "wangcheng678@gmail.com",
   "license": "ISC",
   "devDependencies": {
+    "html-webpack-plugin": "^3.2.0",
     "ts-loader": "^5.3.3",
     "typescript": "^3.2.2",
     "webpack": "^4.28.3",
@@ -17,6 +20,10 @@
     "webpack-dev-server": "^3.1.14"
   },
   "dependencies": {
-    "@types/chrome": "0.0.77"
+    "@cycle/dom": "^22.3.0",
+    "@cycle/run": "^5.2.0",
+    "@types/chrome": "0.0.77",
+    "snabbdom-pragma": "^2.8.0",
+    "xstream": "^11.7.0"
   }
 }
