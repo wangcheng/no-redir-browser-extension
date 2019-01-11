@@ -4,9 +4,9 @@
   "description": "No Redirect",
   "background": {
     "persistent": false,
-    "scripts": ["assets/background.js"]
+    "scripts": ["js/background.js"]
   },
-  "options_page": "assets/options.html",
+  "options_page": "options.html",
   "permissions": ["tabs", "webNavigation", "storage"],
   "manifest_version": 2
 }

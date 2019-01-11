@@ -1,5 +1,4 @@
 const path = require('path')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = env => {
   const production = env === 'production'
@@ -17,7 +16,7 @@ module.exports = env => {
     },
 
     output: {
-      path: path.resolve(__dirname, 'dist/assets'),
+      path: path.resolve(__dirname, 'dist/js'),
     },
 
     devtool: 'sourcemap',
@@ -34,13 +33,5 @@ module.exports = env => {
         },
       ],
     },
-
-    plugins: [
-      new HtmlWebpackPlugin({
-        title: 'Options',
-        filename: 'options.html',
-        chunks: ['options'],
-      }),
-    ],
   }
 }
