@@ -1,5 +1,5 @@
-import rules, {Rule} from './rules'
 import {initStorage, getOptions} from '../storage/helpers'
+import {Rule, Options} from '../types'
 
 interface Subscription {
   unsubscribe: () => void
@@ -30,16 +30,17 @@ const subscribe = (
   }
 }
 
+const subscribeOptions = ({rules, showNotification}: Options) =>
+  rules.map(rule => subscribe(rule, showNotification))
+
 initStorage().then(options => {
-  const {showNotification} = options
-  let subscriptions = rules.map(rule => subscribe(rule, showNotification))
+  let subscriptions = subscribeOptions(options)
   chrome.storage.onChanged.addListener(() => {
     subscriptions.forEach(s => s.unsubscribe())
-    return getOptions().then(options => {
-      if (options) {
-        subscriptions = rules.map(rule =>
-          subscribe(rule, options.showNotification),
-        )
+    subscriptions = []
+    getOptions().then(newOptions => {
+      if (newOptions) {
+        subscriptions = subscribeOptions(newOptions)
       }
     })
   })

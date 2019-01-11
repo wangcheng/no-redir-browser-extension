@@ -22,7 +22,9 @@
     "@cycle/dom": "^22.3.0",
     "@cycle/run": "^5.2.0",
     "@types/chrome": "0.0.77",
+    "@types/uuid": "^3.4.4",
     "snabbdom-pragma": "^2.8.0",
+    "uuid": "^3.3.2",
     "xstream": "^11.7.0"
   }
 }

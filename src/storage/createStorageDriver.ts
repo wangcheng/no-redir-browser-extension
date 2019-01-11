@@ -1,12 +1,16 @@
 import createStorageStream from './createStorageStream'
-import {setOptions} from './helpers'
-import {StorageSource} from './types'
+import {setOptions, getOptions} from './helpers'
+import {OptionsReducerStream} from '../types'
 
 export default function createStorageDriver() {
   const storage$ = createStorageStream()
-  return (newValue$: StorageSource) => {
-    newValue$.subscribe({
-      next: v => setOptions(v),
+  return (reducer$: OptionsReducerStream) => {
+    reducer$.subscribe({
+      next: reducer => {
+        if (reducer) {
+          getOptions().then(currentValue => setOptions(reducer(currentValue)))
+        }
+      },
     })
     return storage$
   }

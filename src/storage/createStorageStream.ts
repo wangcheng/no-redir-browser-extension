@@ -1,5 +1,5 @@
 import xs, {Listener} from 'xstream'
-import {Options} from './types'
+import {Options} from '../types'
 import {getOptions, initStorage} from './helpers'
 
 const noop = () => {}
