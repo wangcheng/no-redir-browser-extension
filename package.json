@@ -1,7 +1,7 @@
 {
   "name": "no-redirect-browser-extension",
   "version": "1.0.0",
-  "description": "A Browser Extenstion",
+  "description": "A browser extenstion that intercepts redirect",
   "scripts": {
     "start": "webpack --watch",
     "dev": "webpack-dev-server",
@@ -9,12 +9,16 @@
     "clean": "rm -r ./dist/assets",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "wangcheng678@gmail.com",
-  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:wangcheng678/no-redir-browser-extension.git"
+  },
+  "author": "Cheng Wang",
+  "license": "MIT",
   "devDependencies": {
     "ts-loader": "^5.3.3",
     "typescript": "^3.2.2",
-    "webpack": "^4.28.3",
+    "webpack": "^4.28.4",
     "webpack-cli": "^3.2.1",
     "webpack-dev-server": "^3.1.14"
   },
@@ -25,6 +29,6 @@
     "@types/uuid": "^3.4.4",
     "snabbdom-pragma": "^2.8.0",
     "uuid": "^3.3.2",
-    "xstream": "^11.7.0"
+    "xstream": "^11.9.0"
   }
 }
