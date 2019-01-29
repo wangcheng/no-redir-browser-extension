@@ -7,6 +7,6 @@
     "scripts": ["js/background.js"]
   },
   "options_page": "options.html",
-  "permissions": ["tabs", "webNavigation", "storage"],
+  "permissions": ["tabs", "webNavigation", "storage", "notifications"],
   "manifest_version": 2
 }

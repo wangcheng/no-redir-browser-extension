@@ -10,7 +10,7 @@ export default ({showNotification}: Props) => (
     <label>
       <input type="checkbox" id="checkbox" checked={showNotification} />{' '}
       <span className="label-body">
-        <code>console.log</code> every interception
+        Show notification for every interception.
       </span>
     </label>
     <div className="row">

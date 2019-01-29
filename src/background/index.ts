@@ -17,7 +17,12 @@ const subscribe = (
     if (frameId === 0 && redirectUrl) {
       chrome.tabs.update(tabId, {url: redirectUrl}, () => {
         if (showNotification) {
-          console.log('redirectUrl', redirectUrl)
+          chrome.notifications.create({
+            type: 'basic',
+            title: 'no-redir',
+            message: redirectUrl,
+            iconUrl: 'img/icon_1.png',
+          })
         }
       })
     }
