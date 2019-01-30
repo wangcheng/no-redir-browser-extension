@@ -38,14 +38,19 @@ const subscribe = (
 const subscribeOptions = ({rules, showNotification}: Options) =>
   rules.map(rule => subscribe(rule, showNotification))
 
-initStorage().then(options => {
-  let subscriptions = subscribeOptions(options)
+chrome.runtime.onInstalled.addListener(() => {
+  let subscriptions: Subscription[] = []
+
+  initStorage().then(options => {
+    subscriptions = subscribeOptions(options)
+  })
+
   chrome.storage.onChanged.addListener(() => {
     subscriptions.forEach(s => s.unsubscribe())
     subscriptions = []
-    getOptions().then(newOptions => {
-      if (newOptions) {
-        subscriptions = subscribeOptions(newOptions)
+    getOptions().then(options => {
+      if (options) {
+        subscriptions = subscribeOptions(options)
       }
     })
   })
