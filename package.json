@@ -17,10 +17,10 @@
   "license": "MIT",
   "devDependencies": {
     "ts-loader": "^5.3.3",
-    "typescript": "^3.2.2",
-    "webpack": "^4.28.4",
-    "webpack-cli": "^3.2.1",
-    "webpack-dev-server": "^3.1.14"
+    "typescript": "^3.2.3",
+    "webpack": "^4.29.5",
+    "webpack-cli": "^3.2.3",
+    "webpack-dev-server": "^3.2.0"
   },
   "dependencies": {
     "@cycle/dom": "^22.3.0",
@@ -29,6 +29,6 @@
     "@types/uuid": "^3.4.4",
     "snabbdom-pragma": "^2.8.0",
     "uuid": "^3.3.2",
-    "xstream": "^11.9.0"
+    "xstream": "^11.10.0"
   }
 }
