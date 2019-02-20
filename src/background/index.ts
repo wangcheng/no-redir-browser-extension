@@ -21,7 +21,7 @@ const subscribe = (
             type: 'basic',
             title: 'no-redir',
             message: redirectUrl,
-            iconUrl: 'img/icon_1.png',
+            iconUrl: 'img/icon_awesome_face.png',
           })
         }
       })
