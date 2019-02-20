@@ -3,7 +3,7 @@
   "version": "1.0",
   "description": "No Redirect",
   "background": {
-    "persistent": false,
+    "persistent": true,
     "scripts": ["js/background.js"]
   },
   "options_page": "options.html",
