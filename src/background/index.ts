@@ -9,7 +9,7 @@ type CallbackDetails = chrome.webNavigation.WebNavigationParentedCallbackDetails
 
 const subscribe = (
   {filter, key}: Rule,
-  showNotification: boolean,
+  showNotification: boolean
 ): Subscription => {
   const callback = ({url, tabId, frameId}: CallbackDetails) => {
     const {searchParams} = new URL(url)
@@ -21,7 +21,7 @@ const subscribe = (
             type: 'basic',
             title: 'no-redir',
             message: redirectUrl,
-            iconUrl: 'img/icon_awesome_face.png',
+            iconUrl: 'img/icon_awesome_face_600.png',
           })
         }
       })
