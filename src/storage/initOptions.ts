@@ -6,19 +6,15 @@ const initOptions: Options = {
   rules: [
     {
       id: uuid(),
-      filter: {
-        hostEquals: 'slack-redir.net',
-        pathEquals: '/link',
-      },
+      pattern: '*://slack-redir.net/link?*',
       key: 'url',
+      template: null,
     },
     {
       id: uuid(),
-      filter: {
-        hostEquals: 'www.google.com',
-        pathEquals: '/url',
-      },
+      pattern: '*://www.google.com/url?*',
       key: 'q',
+      template: null,
     },
   ],
 }
