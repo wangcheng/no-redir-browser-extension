@@ -3,8 +3,9 @@ import {Driver} from '@cycle/run'
 
 export interface Rule {
   id: string
-  filter: chrome.events.UrlFilter
+  pattern: string
   key: string
+  template: string | null
 }
 
 export interface Options {

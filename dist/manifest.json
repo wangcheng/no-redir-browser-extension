@@ -13,6 +13,12 @@
     "128": "img/icon_awesome_face_128.png"
   },
   "options_page": "options.html",
-  "permissions": ["tabs", "webNavigation", "storage", "notifications"],
+  "permissions": [
+    "webRequestBlocking",
+    "webRequest",
+    "storage",
+    "notifications",
+    "<all_urls>"
+  ],
   "manifest_version": 2
 }

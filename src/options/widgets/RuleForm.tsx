@@ -3,19 +3,14 @@ import Snabbdom from 'snabbdom-pragma'
 interface InputProps {
   label: string
   id: string
-  pattern: string
+  required?: boolean
   placeholder: string
 }
+
 const Input = ({label, ...props}: InputProps) => (
   <div className="four columns">
     <label htmlFor={props.id}>{label}</label>
-    <input
-      type="text"
-      required
-      spellcheck={false}
-      className="u-full-width"
-      {...props}
-    />
+    <input type="text" spellcheck={false} className="u-full-width" {...props} />
   </div>
 )
 
@@ -24,18 +19,17 @@ export default () => (
     <h5>Add a Rule</h5>
     <div className="row">
       <Input
-        label="hostEquals"
-        id="host-equals"
-        pattern="[\w\-\.]+"
-        placeholder="example: www.google.com"
+        label="pattern"
+        id="pattern"
+        required
+        placeholder="*://weibointl.api.weibo.cn/share/*?*"
       />
+      <Input label="key" id="key" required placeholder="weibo_id" />
       <Input
-        label="pathEquals"
-        id="path-equals"
-        pattern="[\w\-\/]+"
-        placeholder="example: /url"
+        label="template"
+        id="template"
+        placeholder="https://m.weibo.cn/status/{value}"
       />
-      <Input label="key" id="key" pattern="[\w\-]+" placeholder="example: q" />
     </div>
     <div className="row">
       <button type="submit" className="u-pull-right button-primary">
@@ -49,7 +43,7 @@ export default () => (
 )
 
 export interface RuleFormElements extends HTMLFormControlsCollection {
-  'host-equals': HTMLInputElement
-  'path-equals': HTMLInputElement
+  pattern: HTMLInputElement
   key: HTMLInputElement
+  template: HTMLInputElement
 }
