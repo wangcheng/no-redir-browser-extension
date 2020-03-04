@@ -1,5 +1,5 @@
 import { Options } from "../types";
-import uuid from "uuid/v4";
+import { v4 as uuid } from "uuid";
 
 const initOptions: Options = {
   showNotification: false,
