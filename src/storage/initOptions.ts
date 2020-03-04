@@ -1,5 +1,5 @@
-import {Options} from '../types'
-import uuid from 'uuid/v4'
+import { Options } from "../types";
+import uuid from "uuid/v4";
 
 const initOptions: Options = {
   showNotification: false,
@@ -7,20 +7,20 @@ const initOptions: Options = {
     {
       id: uuid(),
       filter: {
-        hostEquals: 'slack-redir.net',
-        pathEquals: '/link',
+        hostEquals: "slack-redir.net",
+        pathEquals: "/link"
       },
-      key: 'url',
+      key: "url"
     },
     {
       id: uuid(),
       filter: {
-        hostEquals: 'www.google.com',
-        pathEquals: '/url',
+        hostEquals: "www.google.com",
+        pathEquals: "/url"
       },
-      key: 'q',
-    },
-  ],
-}
+      key: "q"
+    }
+  ]
+};
 
-export default initOptions
+export default initOptions;

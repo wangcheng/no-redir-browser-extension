@@ -1,12 +1,12 @@
-import Snabbdom from 'snabbdom-pragma'
-import {Rule} from '../../types'
-import rulePreview from '../utils/rulePreview'
+import Snabbdom from "snabbdom-pragma";
+import { Rule } from "../../types";
+import rulePreview from "../utils/rulePreview";
 
 interface Props {
-  rules: Rule[]
+  rules: Rule[];
 }
 
-export default ({rules}: Props) => (
+export default ({ rules }: Props) => (
   <section>
     <h5>Rules</h5>
     <table className="u-full-width">
@@ -44,4 +44,4 @@ export default ({rules}: Props) => (
       ))}
     </table>
   </section>
-)
+);

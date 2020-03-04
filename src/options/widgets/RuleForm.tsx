@@ -1,12 +1,12 @@
-import Snabbdom from 'snabbdom-pragma'
+import Snabbdom from "snabbdom-pragma";
 
 interface InputProps {
-  label: string
-  id: string
-  pattern: string
-  placeholder: string
+  label: string;
+  id: string;
+  pattern: string;
+  placeholder: string;
 }
-const Input = ({label, ...props}: InputProps) => (
+const Input = ({ label, ...props }: InputProps) => (
   <div className="four columns">
     <label htmlFor={props.id}>{label}</label>
     <input
@@ -17,7 +17,7 @@ const Input = ({label, ...props}: InputProps) => (
       {...props}
     />
   </div>
-)
+);
 
 export default () => (
   <form id="rule-form" autocomplete="off" autocapitalize="none">
@@ -46,10 +46,10 @@ export default () => (
       </button>
     </div>
   </form>
-)
+);
 
 export interface RuleFormElements extends HTMLFormControlsCollection {
-  'host-equals': HTMLInputElement
-  'path-equals': HTMLInputElement
-  key: HTMLInputElement
+  "host-equals": HTMLInputElement;
+  "path-equals": HTMLInputElement;
+  key: HTMLInputElement;
 }
