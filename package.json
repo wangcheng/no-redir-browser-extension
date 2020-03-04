@@ -19,18 +19,18 @@
   "devDependencies": {
     "prettier": "^1.19.1",
     "ts-loader": "^6.2.1",
-    "typescript": "^3.7.2",
-    "webpack": "^4.41.2",
-    "webpack-cli": "^3.3.10",
-    "webpack-dev-server": "^3.9.0"
+    "typescript": "^3.8.3",
+    "webpack": "^4.42.0",
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.10.3"
   },
   "dependencies": {
     "@cycle/dom": "^22.4.0",
     "@cycle/run": "^5.4.0",
-    "@types/chrome": "^0.0.91",
-    "@types/uuid": "^3.4.6",
+    "@types/chrome": "^0.0.98",
+    "@types/uuid": "^7.0.0",
     "snabbdom-pragma": "^2.8.0",
-    "uuid": "^3.3.3",
+    "uuid": "^7.0.2",
     "xstream": "^11.11.0"
   },
   "prettier": {}
