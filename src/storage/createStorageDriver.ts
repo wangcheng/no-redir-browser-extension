@@ -8,7 +8,11 @@ export default function createStorageDriver() {
     reducer$.subscribe({
       next: reducer => {
         if (reducer) {
-          getOptions().then(currentValue => setOptions(reducer(currentValue)));
+          getOptions().then(currentValue => {
+            if (currentValue) {
+              setOptions(reducer(currentValue));
+            }
+          });
         }
       }
     });

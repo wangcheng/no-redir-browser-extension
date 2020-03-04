@@ -21,7 +21,7 @@ export interface StorageShape {
 }
 
 export interface OptionsReducer {
-  (currentValue?: Options): Options;
+  (currentValue: Options): Options;
 }
 
 export type OptionsStream = Stream<Options>;
