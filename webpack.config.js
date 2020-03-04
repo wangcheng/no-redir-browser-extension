@@ -1,37 +1,37 @@
-const path = require('path')
+const path = require("path");
 
 module.exports = env => {
-  const production = env === 'production'
+  const production = env === "production";
 
   return {
-    mode: production ? 'production' : 'development',
+    mode: production ? "production" : "development",
 
     entry: {
-      background: './src/background',
-      options: './src/options',
+      background: "./src/background",
+      options: "./src/options"
     },
 
     devServer: {
-      stats: 'minimal',
+      stats: "minimal"
     },
 
     output: {
-      path: path.resolve(__dirname, 'dist/js'),
+      path: path.resolve(__dirname, "dist/js")
     },
 
-    devtool: 'sourcemap',
+    devtool: "sourcemap",
 
     resolve: {
-      extensions: ['.ts', '.tsx', '.js', '.jsx'],
+      extensions: [".ts", ".tsx", ".js", ".jsx"]
     },
 
     module: {
       rules: [
         {
           test: /\.tsx?$/,
-          loader: 'ts-loader',
-        },
-      ],
-    },
-  }
-}
+          loader: "ts-loader"
+        }
+      ]
+    }
+  };
+};

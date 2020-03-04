@@ -7,7 +7,8 @@
     "dev": "webpack-dev-server",
     "build": "webpack --env production",
     "clean": "rm -r ./dist/assets",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "format": "prettier --write \"./**/+(*.ts|*.tsx|*.js|*.jsx|*.css|*.html|*.md|*.json)\""
   },
   "repository": {
     "type": "git",
@@ -16,6 +17,7 @@
   "author": "Cheng Wang",
   "license": "MIT",
   "devDependencies": {
+    "prettier": "^1.19.1",
     "ts-loader": "^6.2.1",
     "typescript": "^3.7.2",
     "webpack": "^4.41.2",
@@ -30,5 +32,6 @@
     "snabbdom-pragma": "^2.8.0",
     "uuid": "^3.3.3",
     "xstream": "^11.11.0"
-  }
+  },
+  "prettier": {}
 }

@@ -1,14 +1,14 @@
-import Snabbdom from 'snabbdom-pragma'
+import Snabbdom from "snabbdom-pragma";
 
 interface Props {
-  showNotification: boolean
+  showNotification: boolean;
 }
 
-export default ({showNotification}: Props) => (
+export default ({ showNotification }: Props) => (
   <section>
     <h5>Miscellaneous</h5>
     <label>
-      <input type="checkbox" id="checkbox" checked={showNotification} />{' '}
+      <input type="checkbox" id="checkbox" checked={showNotification} />{" "}
       <span className="label-body">
         Show notification for every interception.
       </span>
@@ -17,4 +17,4 @@ export default ({showNotification}: Props) => (
       <button id="reset">Reset Factory Options</button>
     </div>
   </section>
-)
+);
