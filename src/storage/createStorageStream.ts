@@ -1,20 +1,18 @@
 import xs, { Listener } from "xstream";
 import { Options } from "../types";
-import { getOptions, initStorage } from "./helpers";
+import { initStorage, subscribeOptionsChange } from "./helpers";
 
 const noop = () => {};
 
 export default function createStorageStream() {
-  let onStop = noop;
+  let stop = noop;
 
   const start = (listener: Listener<Options>) => {
-    initStorage().then(value => listener.next(value));
-    const callback = () => getOptions().then(value => listener.next(value!));
-    chrome.storage.onChanged.addListener(callback);
-    onStop = () => chrome.storage.onChanged.removeListener(callback);
+    const handleOptionsChange = (value: Options) => listener.next(value);
+    initStorage().then(handleOptionsChange);
+    const subscription = subscribeOptionsChange(handleOptionsChange);
+    stop = subscription.unsubscribe;
   };
-
-  const stop = () => onStop();
 
   return xs.create({ start, stop });
 }

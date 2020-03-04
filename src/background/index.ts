@@ -1,32 +1,41 @@
-import { initStorage, getOptions } from "../storage/helpers";
-import { Rule, Options } from "../types";
-
-interface Subscription {
-  unsubscribe: () => void;
-}
+import { initStorage, subscribeOptionsChange } from "../storage/helpers";
+import { Subscription, Rule, Options } from "../types";
 
 type CallbackDetails = chrome.webNavigation.WebNavigationParentedCallbackDetails;
 
-const subscribe = (
-  { filter, key }: Rule,
-  showNotification: boolean
-): Subscription => {
-  const callback = ({ url, tabId, frameId }: CallbackDetails) => {
+const isValidUrl = (str: string) => {
+  try {
+    new URL(str);
+    return true;
+  } catch (e) {
+    return false;
+  }
+};
+
+const createNotification = (message: string) => {
+  chrome.notifications.create({
+    type: "basic",
+    title: "no-redir",
+    message,
+    iconUrl: "img/icon_awesome_face_600.png"
+  });
+};
+
+const subscribe = (rule: Rule, showNotification: boolean): Subscription => {
+  const { filter, key } = rule;
+
+  const callback = ({ url, tabId }: CallbackDetails) => {
     const { searchParams } = new URL(url);
     const redirectUrl = searchParams.get(key);
-    if (frameId === 0 && redirectUrl) {
+    if (redirectUrl && isValidUrl(redirectUrl)) {
       chrome.tabs.update(tabId, { url: redirectUrl }, () => {
         if (showNotification) {
-          chrome.notifications.create({
-            type: "basic",
-            title: "no-redir",
-            message: redirectUrl,
-            iconUrl: "img/icon_awesome_face_600.png"
-          });
+          createNotification(redirectUrl);
         }
       });
     }
   };
+
   chrome.webNavigation.onBeforeNavigate.addListener(callback, {
     url: [filter]
   });
@@ -37,23 +46,27 @@ const subscribe = (
   };
 };
 
-const subscribeOptions = ({ rules, showNotification }: Options) =>
-  rules.map(rule => subscribe(rule, showNotification));
+let webNavigationSubscriptions: Subscription[] = [];
 
-chrome.runtime.onInstalled.addListener(() => {
-  let subscriptions: Subscription[] = [];
+const updateWebNavigationSubscriptions = (options: Options) => {
+  const { rules, showNotification } = options;
+  webNavigationSubscriptions.forEach(s => s.unsubscribe());
+  webNavigationSubscriptions = rules.map(rule =>
+    subscribe(rule, showNotification)
+  );
+};
 
-  initStorage().then(options => {
-    subscriptions = subscribeOptions(options);
-  });
+const handleStartUp = () => {
+  initStorage().then(updateWebNavigationSubscriptions);
+  subscribeOptionsChange(updateWebNavigationSubscriptions);
+};
 
-  chrome.storage.onChanged.addListener(() => {
-    subscriptions.forEach(s => s.unsubscribe());
-    subscriptions = [];
-    getOptions().then(options => {
-      if (options) {
-        subscriptions = subscribeOptions(options);
-      }
-    });
-  });
-});
+const handleCleanUp = () => {
+  webNavigationSubscriptions.forEach(s => s.unsubscribe());
+  webNavigationSubscriptions = [];
+};
+
+chrome.runtime.onInstalled.addListener(handleStartUp);
+chrome.runtime.onStartup.addListener(handleStartUp);
+chrome.runtime.onSuspend.addListener(handleCleanUp);
+chrome.runtime.onSuspendCanceled.addListener(handleStartUp);
