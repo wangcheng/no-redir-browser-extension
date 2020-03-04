@@ -4,14 +4,16 @@ import {RuleFormElements} from '../widgets/RuleForm'
 
 export default (form: HTMLFormElement) => {
   const elements = form.elements as RuleFormElements
-  const pattern = elements['pattern'].value
+  const hostEquals = elements['host-equals'].value
+  const pathEquals = elements['path-equals'].value
   const key = elements['key'].value
-  const template = elements['template'].value || null
   const rule: Rule = {
     id: uuid(),
-    pattern,
+    filter: {
+      hostEquals,
+      pathEquals,
+    },
     key,
-    template,
   }
   return rule
 }

@@ -1,5 +1,6 @@
 import Snabbdom from 'snabbdom-pragma'
 import {Rule} from '../../types'
+import rulePreview from '../utils/rulePreview'
 
 interface Props {
   rules: Rule[]
@@ -12,9 +13,10 @@ export default ({rules}: Props) => (
       <thead>
         <tr>
           <th>#</th>
-          <th>pattern</th>
+          <th>hostEquals</th>
+          <th>pathEquals</th>
           <th>key</th>
-          <th>template</th>
+          <th>preview</th>
           <th>action</th>
         </tr>
       </thead>
@@ -22,13 +24,16 @@ export default ({rules}: Props) => (
         <tr key={r.id}>
           <td>{index + 1}</td>
           <td>
-            <code>{r.pattern}</code>
+            <code>{r.filter.hostEquals}</code>
+          </td>
+          <td>
+            <code>{r.filter.pathEquals}</code>
           </td>
           <td>
             <code>{r.key}</code>
           </td>
           <td>
-            <code>{r.template || 'null'}</code>
+            <code>{rulePreview(r)}</code>
           </td>
           <td>
             <button className="js-button-delete-rule" data-id={r.id}>

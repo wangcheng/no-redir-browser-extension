@@ -5,33 +5,33 @@ interface Subscription {
   unsubscribe: () => void
 }
 
-const subscribe = (rule: Rule, showNotification: boolean): Subscription => {
-  const {pattern, key, template} = rule
-  const callback = (details: chrome.webRequest.WebRequestBodyDetails) => {
-    const {searchParams} = new URL(details.url)
-    const value = searchParams.get(key)
-    if (value) {
-      const redirectUrl = template ? template.replace('{value}', value) : value
-      if (showNotification) {
-        chrome.notifications.create({
-          type: 'basic',
-          title: 'no-redir',
-          message: redirectUrl,
-          iconUrl: 'img/icon_awesome_face_600.png',
-        })
-      }
-      return {redirectUrl}
+type CallbackDetails = chrome.webNavigation.WebNavigationParentedCallbackDetails
+
+const subscribe = (
+  {filter, key}: Rule,
+  showNotification: boolean
+): Subscription => {
+  const callback = ({url, tabId, frameId}: CallbackDetails) => {
+    const {searchParams} = new URL(url)
+    const redirectUrl = searchParams.get(key)
+    if (frameId === 0 && redirectUrl) {
+      chrome.tabs.update(tabId, {url: redirectUrl}, () => {
+        if (showNotification) {
+          chrome.notifications.create({
+            type: 'basic',
+            title: 'no-redir',
+            message: redirectUrl,
+            iconUrl: 'img/icon_awesome_face_600.png',
+          })
+        }
+      })
     }
   }
-  chrome.webRequest.onBeforeRequest.addListener(
-    callback,
-    {urls: [pattern], types: ['main_frame']},
-    ['blocking']
-  )
+  chrome.webNavigation.onBeforeNavigate.addListener(callback, {url: [filter]})
 
   return {
     unsubscribe: () =>
-      chrome.webRequest.onBeforeRequest.removeListener(callback),
+      chrome.webNavigation.onBeforeNavigate.removeListener(callback),
   }
 }
 
