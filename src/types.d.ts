@@ -1,6 +1,10 @@
 import { Stream } from "xstream";
 import { Driver } from "@cycle/run";
 
+export interface Subscription {
+  unsubscribe: () => void;
+}
+
 export interface Rule {
   id: string;
   filter: chrome.events.UrlFilter;
