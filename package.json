@@ -17,6 +17,8 @@
   "author": "Cheng Wang",
   "license": "MIT",
   "devDependencies": {
+    "archiver": "^3.1.1",
+    "chrome-webstore-upload": "^0.2.2",
     "prettier": "^1.19.1",
     "ts-loader": "^6.2.1",
     "typescript": "^3.8.3",
