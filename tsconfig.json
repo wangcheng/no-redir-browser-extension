@@ -8,6 +8,7 @@
     "jsxFactory": "Snabbdom.createElement",
     "sourceMap": true,
     "moduleResolution": "node",
+    "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitAny": true,

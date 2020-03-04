@@ -2,7 +2,12 @@ import xs from "xstream";
 import { run } from "@cycle/run";
 import { makeDOMDriver, MainDOMSource } from "@cycle/dom";
 import Snabbdom from "snabbdom-pragma";
-import { OptionsReducerStream, OptionsStream, Options } from "../types";
+import {
+  OptionsReducerStream,
+  OptionsStream,
+  Options,
+  OptionsReducer
+} from "../types";
 import createStorageDriver from "../storage/createStorageDriver";
 import App from "./widgets/App";
 import initOptions from "../storage/initOptions";
@@ -21,6 +26,9 @@ interface MainSources {
   storage: OptionsStream;
 }
 
+const confirm = (result: OptionsReducer) =>
+  window.confirm("Are you sure?") ? result : null;
+
 const main = ({ storage, DOM }: MainSources) => {
   const DOMSink = storage.map(options => <App options={options} />);
   const storageSink: OptionsReducerStream = xs.merge(
@@ -28,37 +36,37 @@ const main = ({ storage, DOM }: MainSources) => {
       .events("change")
       .map(event => {
         const target = event.currentTarget as HTMLInputElement;
-        return (options: Options) => ({
+        const reducer: OptionsReducer = (options: Options) => ({
           ...options,
           showNotification: target.checked
         });
+        return reducer;
       }),
     DOM.select("#reset")
       .events("click")
-      .map(() => (window.confirm("Are you sure?") ? () => initOptions : null)),
+      .map(() => confirm(() => initOptions)),
     DOM.select("#rule-form")
       .events("submit")
       .map(event => {
         event.preventDefault();
         const rule = createRule(event.currentTarget as HTMLFormElement);
-        return (options: Options) => {
+        const reducer: OptionsReducer = options => {
           const oldRules = options.rules;
           return {
             ...options,
             rules: [...oldRules, rule]
           };
         };
+        return reducer;
       }),
     DOM.select(".js-button-delete-rule")
       .events("click")
       .map(event => {
         const { dataset } = event.currentTarget as HTMLButtonElement;
-        return window.confirm("Are you sure?")
-          ? (options: Options): Options => ({
-              ...options,
-              rules: options.rules.filter(r => r.id !== dataset.id)
-            })
-          : null;
+        return confirm(options => ({
+          ...options,
+          rules: options.rules.filter(r => r.id !== dataset.id)
+        }));
       })
   );
   return { DOM: DOMSink, storage: storageSink };
