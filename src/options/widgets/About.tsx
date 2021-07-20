@@ -14,7 +14,7 @@ export default () => (
       </a>
       . Source code is on{" "}
       <a
-        href="https://github.com/wangcheng678/no-redir-browser-extension"
+        href="https://github.com/wangcheng/no-redir-browser-extension"
         target="_blank"
       >
         Github

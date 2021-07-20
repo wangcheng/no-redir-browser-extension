@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:wangcheng678/no-redir-browser-extension.git"
+    "url": "git@github.com:wangcheng/no-redir-browser-extension.git"
   },
   "author": "Cheng Wang",
   "license": "MIT",
