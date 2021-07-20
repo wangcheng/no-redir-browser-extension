@@ -6,7 +6,7 @@
     "start": "webpack --watch",
     "dev": "webpack-dev-server",
     "build": "webpack --env production",
-    "clean": "rm -r ./dist/assets",
+    "clean": "rm -r ./dist/js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "format": "prettier --write \"./**/+(*.ts|*.tsx|*.js|*.jsx|*.css|*.html|*.md|*.json)\""
   },
