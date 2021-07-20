@@ -4,7 +4,6 @@
   "description": "A browser extenstion that intercepts redirect",
   "scripts": {
     "start": "webpack --watch",
-    "dev": "webpack-dev-server",
     "build": "webpack --env production",
     "clean": "rm -r ./dist/js",
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -23,8 +22,7 @@
     "ts-loader": "^9.2.3",
     "typescript": "^4.3.5",
     "webpack": "^5.45.1",
-    "webpack-cli": "^4.7.2",
-    "webpack-dev-server": "^3.10.3"
+    "webpack-cli": "^4.7.2"
   },
   "dependencies": {
     "@cycle/dom": "^23.0.0",
