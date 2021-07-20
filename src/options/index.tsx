@@ -6,7 +6,7 @@ import {
   OptionsReducerStream,
   OptionsStream,
   Options,
-  OptionsReducer
+  OptionsReducer,
 } from "../types";
 import createStorageDriver from "../storage/createStorageDriver";
 import App from "./widgets/App";
@@ -18,7 +18,7 @@ document.body.appendChild(container);
 
 const drivers = {
   DOM: makeDOMDriver(container),
-  storage: createStorageDriver()
+  storage: createStorageDriver(),
 };
 
 interface MainSources {
@@ -30,15 +30,15 @@ const confirm = (result: OptionsReducer) =>
   window.confirm("Are you sure?") ? result : null;
 
 const main = ({ storage, DOM }: MainSources) => {
-  const DOMSink = storage.map(options => <App options={options} />);
+  const DOMSink = storage.map((options) => <App options={options} />);
   const storageSink: OptionsReducerStream = xs.merge(
     DOM.select("#checkbox")
       .events("change")
-      .map(event => {
+      .map((event) => {
         const target = event.currentTarget as HTMLInputElement;
         const reducer: OptionsReducer = (options: Options) => ({
           ...options,
-          showNotification: target.checked
+          showNotification: target.checked,
         });
         return reducer;
       }),
@@ -47,25 +47,25 @@ const main = ({ storage, DOM }: MainSources) => {
       .map(() => confirm(() => initOptions)),
     DOM.select("#rule-form")
       .events("submit")
-      .map(event => {
+      .map((event) => {
         event.preventDefault();
         const rule = createRule(event.currentTarget as HTMLFormElement);
-        const reducer: OptionsReducer = options => {
+        const reducer: OptionsReducer = (options) => {
           const oldRules = options.rules;
           return {
             ...options,
-            rules: [...oldRules, rule]
+            rules: [...oldRules, rule],
           };
         };
         return reducer;
       }),
     DOM.select(".js-button-delete-rule")
       .events("click")
-      .map(event => {
+      .map((event) => {
         const { dataset } = event.currentTarget as HTMLButtonElement;
-        return confirm(options => ({
+        return confirm((options) => ({
           ...options,
-          rules: options.rules.filter(r => r.id !== dataset.id)
+          rules: options.rules.filter((r) => r.id !== dataset.id),
         }));
       })
   );

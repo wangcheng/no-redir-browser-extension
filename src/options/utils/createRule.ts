@@ -11,9 +11,9 @@ export default (form: HTMLFormElement) => {
     id: uuid(),
     filter: {
       hostEquals,
-      pathEquals
+      pathEquals,
     },
-    key
+    key,
   };
   return rule;
 };

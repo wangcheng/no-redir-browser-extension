@@ -6,15 +6,15 @@ export default function createStorageDriver() {
   const storage$ = createStorageStream();
   return (reducer$: OptionsReducerStream) => {
     reducer$.subscribe({
-      next: reducer => {
+      next: (reducer) => {
         if (reducer) {
-          getOptions().then(currentValue => {
+          getOptions().then((currentValue) => {
             if (currentValue) {
               setOptions(reducer(currentValue));
             }
           });
         }
-      }
+      },
     });
     return storage$;
   };

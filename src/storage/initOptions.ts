@@ -8,19 +8,19 @@ const initOptions: Options = {
       id: uuid(),
       filter: {
         hostEquals: "slack-redir.net",
-        pathEquals: "/link"
+        pathEquals: "/link",
       },
-      key: "url"
+      key: "url",
     },
     {
       id: uuid(),
       filter: {
         hostEquals: "www.google.com",
-        pathEquals: "/url"
+        pathEquals: "/url",
       },
-      key: "q"
-    }
-  ]
+      key: "q",
+    },
+  ],
 };
 
 export default initOptions;

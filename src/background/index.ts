@@ -1,7 +1,8 @@
 import { initStorage, subscribeOptionsChange } from "../storage/helpers";
 import { Subscription, Rule, Options } from "../types";
 
-type CallbackDetails = chrome.webNavigation.WebNavigationParentedCallbackDetails;
+type CallbackDetails =
+  chrome.webNavigation.WebNavigationParentedCallbackDetails;
 
 const isValidUrl = (str: string) => {
   try {
@@ -17,7 +18,7 @@ const createNotification = (message: string) => {
     type: "basic",
     title: "no-redir",
     message,
-    iconUrl: "img/icon_awesome_face_600.png"
+    iconUrl: "img/icon_awesome_face_600.png",
   });
 };
 
@@ -37,12 +38,12 @@ const subscribe = (rule: Rule, showNotification: boolean): Subscription => {
   };
 
   chrome.webNavigation.onBeforeNavigate.addListener(callback, {
-    url: [filter]
+    url: [filter],
   });
 
   return {
     unsubscribe: () =>
-      chrome.webNavigation.onBeforeNavigate.removeListener(callback)
+      chrome.webNavigation.onBeforeNavigate.removeListener(callback),
   };
 };
 
@@ -50,8 +51,8 @@ let webNavigationSubscriptions: Subscription[] = [];
 
 const updateWebNavigationSubscriptions = (options: Options) => {
   const { rules, showNotification } = options;
-  webNavigationSubscriptions.forEach(s => s.unsubscribe());
-  webNavigationSubscriptions = rules.map(rule =>
+  webNavigationSubscriptions.forEach((s) => s.unsubscribe());
+  webNavigationSubscriptions = rules.map((rule) =>
     subscribe(rule, showNotification)
   );
 };
@@ -61,4 +62,4 @@ const handleStartUp = () => {
   subscribeOptionsChange(updateWebNavigationSubscriptions);
 };
 
-handleStartUp()
+handleStartUp();
