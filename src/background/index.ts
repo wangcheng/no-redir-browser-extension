@@ -61,15 +61,4 @@ const handleStartUp = () => {
   subscribeOptionsChange(updateWebNavigationSubscriptions);
 };
 
-const handleCleanUp = () => {
-  webNavigationSubscriptions.forEach(s => s.unsubscribe());
-  webNavigationSubscriptions = [];
-};
-
-chrome.runtime.onInstalled.addListener(handleStartUp);
-
-chrome.runtime.onStartup.addListener(handleStartUp);
-
-chrome.runtime.onSuspend.addListener(handleCleanUp);
-
-chrome.runtime.onSuspendCanceled.addListener(handleStartUp);
+handleStartUp()
