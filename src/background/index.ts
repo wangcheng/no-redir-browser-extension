@@ -1,8 +1,6 @@
 import { initStorage, subscribeOptionsChange } from "../storage/helpers";
 import { Subscription, Rule, Options } from "../types";
-
-type CallbackDetails =
-  chrome.webNavigation.WebNavigationParentedCallbackDetails;
+import { browser, WebNavigation } from "webextension-polyfill-ts";
 
 const isValidUrl = (str: string) => {
   try {
@@ -14,7 +12,7 @@ const isValidUrl = (str: string) => {
 };
 
 const createNotification = (message: string) => {
-  chrome.notifications.create({
+  browser.notifications.create({
     type: "basic",
     title: "no-redir",
     message,
@@ -25,11 +23,14 @@ const createNotification = (message: string) => {
 const subscribe = (rule: Rule, showNotification: boolean): Subscription => {
   const { filter, key } = rule;
 
-  const callback = ({ url, tabId }: CallbackDetails) => {
+  const callback = ({
+    url,
+    tabId,
+  }: WebNavigation.OnBeforeNavigateDetailsType) => {
     const { searchParams } = new URL(url);
     const redirectUrl = searchParams.get(key);
     if (redirectUrl && isValidUrl(redirectUrl)) {
-      chrome.tabs.update(tabId, { url: redirectUrl }, () => {
+      browser.tabs.update(tabId, { url: redirectUrl }).then(() => {
         if (showNotification) {
           createNotification(redirectUrl);
         }
@@ -37,13 +38,13 @@ const subscribe = (rule: Rule, showNotification: boolean): Subscription => {
     }
   };
 
-  chrome.webNavigation.onBeforeNavigate.addListener(callback, {
+  browser.webNavigation.onBeforeNavigate.addListener(callback, {
     url: [filter],
   });
 
   return {
     unsubscribe: () =>
-      chrome.webNavigation.onBeforeNavigate.removeListener(callback),
+      browser.webNavigation.onBeforeNavigate.removeListener(callback),
   };
 };
 

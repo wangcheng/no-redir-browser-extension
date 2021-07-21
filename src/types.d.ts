@@ -1,5 +1,6 @@
 import { Stream } from "xstream";
 import { Driver } from "@cycle/run";
+import { Events } from "webextension-polyfill-ts";
 
 export interface Subscription {
   unsubscribe: () => void;
@@ -7,7 +8,7 @@ export interface Subscription {
 
 export interface Rule {
   id: string;
-  filter: chrome.events.UrlFilter;
+  filter: Events.UrlFilter;
   key: string;
 }
 

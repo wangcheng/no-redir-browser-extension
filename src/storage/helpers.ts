@@ -1,18 +1,15 @@
 import { Subscription, Options, StorageShape } from "../types";
 import initOptions from "./initOptions";
+import { browser } from "webextension-polyfill-ts";
 
 const KEY = "options";
 
 export function getOptions(): Promise<Options | undefined> {
-  return new Promise((resolve) =>
-    chrome.storage.sync.get(KEY, (v: StorageShape) => resolve(v.options))
-  );
+  return browser.storage.sync.get(KEY).then((v: StorageShape) => v.options);
 }
 
 export function setOptions(newValue: Options): Promise<Options> {
-  return new Promise((resolve) =>
-    chrome.storage.sync.set({ [KEY]: newValue }, () => resolve(newValue))
-  );
+  return browser.storage.sync.set({ [KEY]: newValue }).then(() => newValue);
 }
 
 export function initStorage() {
@@ -36,9 +33,9 @@ export function subscribeOptionsChange(onChange: ChangeHandler): Subscription {
     }
   };
 
-  chrome.storage.onChanged.addListener(callback);
+  browser.storage.onChanged.addListener(callback);
 
   return {
-    unsubscribe: () => chrome.storage.onChanged.removeListener(callback),
+    unsubscribe: () => browser.storage.onChanged.removeListener(callback),
   };
 }
