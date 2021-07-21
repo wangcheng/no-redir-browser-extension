@@ -33,5 +33,5 @@ webStore
     return Promise.reject(new Error("failed to publish"));
   })
   .catch((error) => {
-    console.log(error);
+    throw error;
   });
