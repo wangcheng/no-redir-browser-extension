@@ -11,7 +11,11 @@ import {
 import createStorageDriver from "../storage/createStorageDriver";
 import App from "./widgets/App";
 import initOptions from "../storage/initOptions";
-import createRule from "./utils/createRule";
+import {
+  createRuleFromForm,
+  createRuleFromSmartUrlParserForm,
+} from "./utils/createRule";
+import { select as selectSmartUrlParserForm } from "./widgets/SmartUrlParserForm";
 
 const container = document.createElement("div");
 document.body.appendChild(container);
@@ -49,7 +53,7 @@ const main = ({ storage, DOM }: MainSources) => {
       .events("submit")
       .map((event) => {
         event.preventDefault();
-        const rule = createRule(event.currentTarget as HTMLFormElement);
+        const rule = createRuleFromForm(event.currentTarget as HTMLFormElement);
         const reducer: OptionsReducer = (options) => {
           const oldRules = options.rules;
           return {
@@ -67,6 +71,23 @@ const main = ({ storage, DOM }: MainSources) => {
           ...options,
           rules: options.rules.filter((r) => r.id !== dataset.id),
         }));
+      }),
+    selectSmartUrlParserForm(DOM)
+      .events("submit")
+      .map((event) => {
+        event.preventDefault();
+        const rule = createRuleFromSmartUrlParserForm(
+          event.currentTarget as HTMLFormElement
+        );
+        return rule
+          ? (options) => {
+              const oldRules = options.rules;
+              return {
+                ...options,
+                rules: [...oldRules, rule],
+              };
+            }
+          : null;
       })
   );
   return { DOM: DOMSink, storage: storageSink };
