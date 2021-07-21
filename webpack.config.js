@@ -12,7 +12,7 @@ module.exports = (env) => {
     },
 
     output: {
-      path: path.resolve(__dirname, "dist/js"),
+      path: path.resolve(__dirname, "dist"),
     },
 
     devtool: isProduction ? false : "inline-source-map",
