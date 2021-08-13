@@ -22,11 +22,18 @@ const createNotification = (message: string) => {
   });
 };
 
-const subscribe = (rule: Rule, showNotification: boolean): Subscription => {
-  const { filter, key } = rule;
-
+const subscribe = (rules: Rule[], showNotification: boolean): Subscription => {
   const callback = ({ url, tabId }: CallbackDetails) => {
-    const { searchParams } = new URL(url);
+    const { pathname, hostname, searchParams } = new URL(url);
+    const rule = rules.find(
+      ({ filter }) =>
+        filter.hostEquals === hostname && filter.pathEquals === pathname
+    );
+
+    if (!rule) return;
+
+    const { key } = rule;
+
     const redirectUrl = searchParams.get(key);
     if (redirectUrl && isValidUrl(redirectUrl)) {
       chrome.tabs.update(tabId, { url: redirectUrl }, () => {
@@ -38,7 +45,7 @@ const subscribe = (rule: Rule, showNotification: boolean): Subscription => {
   };
 
   chrome.webNavigation.onBeforeNavigate.addListener(callback, {
-    url: [filter],
+    url: rules.map((r) => r.filter),
   });
 
   return {
@@ -47,14 +54,12 @@ const subscribe = (rule: Rule, showNotification: boolean): Subscription => {
   };
 };
 
-let webNavigationSubscriptions: Subscription[] = [];
+let webNavigationSubscriptions: Subscription;
 
 const updateWebNavigationSubscriptions = (options: Options) => {
   const { rules, showNotification } = options;
-  webNavigationSubscriptions.forEach((s) => s.unsubscribe());
-  webNavigationSubscriptions = rules.map((rule) =>
-    subscribe(rule, showNotification)
-  );
+  webNavigationSubscriptions?.unsubscribe();
+  webNavigationSubscriptions = subscribe(rules, showNotification);
 };
 
 const handleStartUp = () => {
