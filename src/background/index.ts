@@ -1,5 +1,5 @@
 import { initStorage, subscribeOptionsChange } from "../storage/helpers";
-import { Subscription, Rule, Options } from "../types";
+import { Subscription, Options } from "../types";
 import { browser, WebNavigation } from "webextension-polyfill-ts";
 
 const isValidUrl = (str: string) => {
@@ -20,15 +20,16 @@ const createNotification = (message: string) => {
   });
 };
 
-const subscribe = (rule: Rule, showNotification: boolean): Subscription => {
-  const { filter, key } = rule;
+type OnBeforeNavigateDetailsType = WebNavigation.OnBeforeNavigateDetailsType;
 
-  const callback = ({
-    url,
-    tabId,
-  }: WebNavigation.OnBeforeNavigateDetailsType) => {
-    const { searchParams } = new URL(url);
-    const redirectUrl = searchParams.get(key);
+const subscribe = ({ rules, showNotification }: Options): Subscription => {
+  const callback = ({ url, tabId }: OnBeforeNavigateDetailsType) => {
+    const { hostname, pathname, searchParams } = new URL(url);
+    const foundRule = rules.find(({ filter }) => {
+      return filter.hostEquals === hostname && filter.pathEquals === pathname;
+    });
+    if (!foundRule) return;
+    const redirectUrl = searchParams.get(foundRule.key);
     if (redirectUrl && isValidUrl(redirectUrl)) {
       browser.tabs.update(tabId, { url: redirectUrl }).then(() => {
         if (showNotification) {
@@ -39,7 +40,7 @@ const subscribe = (rule: Rule, showNotification: boolean): Subscription => {
   };
 
   browser.webNavigation.onBeforeNavigate.addListener(callback, {
-    url: [filter],
+    url: rules.map(({ filter }) => filter),
   });
 
   return {
@@ -48,14 +49,13 @@ const subscribe = (rule: Rule, showNotification: boolean): Subscription => {
   };
 };
 
-let webNavigationSubscriptions: Subscription[] = [];
+let webNavigationSubscription: Subscription;
 
 const updateWebNavigationSubscriptions = (options: Options) => {
-  const { rules, showNotification } = options;
-  webNavigationSubscriptions.forEach((s) => s.unsubscribe());
-  webNavigationSubscriptions = rules.map((rule) =>
-    subscribe(rule, showNotification)
-  );
+  if (webNavigationSubscription) {
+    webNavigationSubscription.unsubscribe();
+  }
+  webNavigationSubscription = subscribe(options);
 };
 
 const handleStartUp = () => {
