@@ -3,10 +3,10 @@ import fs from "node:fs";
 import archiver from "archiver";
 import chromeWebstoreUpload from "chrome-webstore-upload";
 
-const { CLIENT_ID, CLIENT_SECRET, REFRESH_TOKEN } = process.env;
+const { EXTENSION_ID, CLIENT_ID, CLIENT_SECRET, REFRESH_TOKEN } = process.env;
 
 const webStore = chromeWebstoreUpload({
-  extensionId: "bgflddecjcadaapedngfifbkhghnpmep",
+  extensionId: EXTENSION_ID,
   clientId: CLIENT_ID,
   clientSecret: CLIENT_SECRET,
   refreshToken: REFRESH_TOKEN,
