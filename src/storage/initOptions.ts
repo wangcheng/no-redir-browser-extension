@@ -1,11 +1,10 @@
 import { Options } from "../types";
-import { v4 as uuid } from "uuid";
 
 const initOptions: Options = {
   showNotification: false,
   rules: [
     {
-      id: uuid(),
+      id: crypto.randomUUID(),
       filter: {
         hostEquals: "slack-redir.net",
         pathEquals: "/link",
@@ -13,7 +12,7 @@ const initOptions: Options = {
       key: "url",
     },
     {
-      id: uuid(),
+      id: crypto.randomUUID(),
       filter: {
         hostEquals: "www.google.com",
         pathEquals: "/url",
