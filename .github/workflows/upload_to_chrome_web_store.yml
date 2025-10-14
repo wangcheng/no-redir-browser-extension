@@ -20,7 +20,6 @@ jobs:
       - run: npm run build
       - run: node ./scripts/publish.mjs
         env:
-          EXTENSION_ID: ${{ env.EXTENSION_ID }}
           CLIENT_ID: ${{ secrets.GOOGLE_API_CLIENT_ID }}
           CLIENT_SECRET: ${{ secrets.GOOGLE_API_CLIENT_SECRET }}
           REFRESH_TOKEN: ${{ secrets.GOOGLE_API_REFRESH_TOKEN }}
