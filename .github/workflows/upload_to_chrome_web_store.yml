@@ -18,7 +18,7 @@ jobs:
           cache: "npm"
       - run: npm install
       - run: npm run build
-      - run: node ./script/publish.js
+      - run: node ./scripts/publish.mjs
         env:
           CLIENT_ID: ${{ secrets.GOOGLE_API_CLIENT_ID }}
           CLIENT_SECRET: ${{ secrets.GOOGLE_API_CLIENT_SECRET }}

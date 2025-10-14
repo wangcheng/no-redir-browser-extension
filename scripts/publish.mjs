@@ -1,7 +1,7 @@
-const path = require("path");
-const fs = require("fs");
-const archiver = require("archiver");
-const chromeWebstoreUpload = require("chrome-webstore-upload");
+import path from "node:path";
+import fs from "node:fs";
+import archiver from "archiver";
+import chromeWebstoreUpload from "chrome-webstore-upload";
 
 const { CLIENT_ID, CLIENT_SECRET, REFRESH_TOKEN } = process.env;
 
