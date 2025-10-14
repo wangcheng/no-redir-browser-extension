@@ -18,6 +18,7 @@ export default ({ rules }: Props) => (
           <th>key</th>
           <th>preview</th>
           <th>action</th>
+          <th>test</th>
         </tr>
       </thead>
       {rules.map((r, index) => (
@@ -39,6 +40,11 @@ export default ({ rules }: Props) => (
             <button className="js-button-delete-rule" data-id={r.id}>
               Delete
             </button>
+          </td>
+          <td>
+            <a href={rulePreview(r, "http://example.com")} target="_blank">
+              Test
+            </a>
           </td>
         </tr>
       ))}
