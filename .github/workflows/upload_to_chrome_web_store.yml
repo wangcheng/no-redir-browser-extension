@@ -1,0 +1,25 @@
+name: Upload to Chrome Web Store
+
+on:
+  workflow_dispatch:
+  release:
+    types:
+      - created
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: "npm"
+      - run: npm install
+      - run: npm run build
+      - run: node ./script/publish.js
+        env:
+          CLIENT_ID: ${{ secrets.GOOGLE_API_CLIENT_ID }}
+          CLIENT_SECRET: ${{ secrets.GOOGLE_API_CLIENT_SECRET }}
+          REFRESH_TOKEN: ${{ secrets.GOOGLE_API_REFRESH_TOKEN }}
