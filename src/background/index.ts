@@ -18,7 +18,7 @@ const createNotification = (message: string) => {
     type: "basic",
     title: "no-redir",
     message,
-    iconUrl: "img/icon_awesome_face_600.png",
+    iconUrl: "/img/icon_awesome_face_600.png",
   });
 };
 
